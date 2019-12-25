@@ -70,10 +70,44 @@ export default class Login extends Component {
         </View>
         <View></View>
       </View>
-
       <View style={styles.footer}>
         <HelloWorld />
       </View>
     </View>;
   }
 }
+
+const styles = StyleSheet.create({
+  header: {
+    flex: 15,
+    backgroundColor: "#000000",
+    alignItems: "center"
+  },
+  container: {
+    flex: 70,
+    backgroundColor: "#fff",
+    alignItems: "center"
+  },
+  footer: {
+    flex: 10,
+    backgroundColor: "#ffffff",
+    alignItems: "center",
+    borderColor: "#000000",
+    borderTopWidth: 0.3
+  },
+  loginHeader: {
+    color: "#ffffff",
+    paddingTop: 30,
+    fontSize: 20
+  },
+  loginButton: {
+    paddingTop: 10,
+    color: "blue",
+    width: 200
+  },
+  logo: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 30
+  }
+});
