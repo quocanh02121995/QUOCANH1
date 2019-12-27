@@ -9,10 +9,12 @@
   },
   "dependencies": {
     "expo": "~36.0.0",
-    "ract-native-button": "^1.0.4",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native-button": "^1.8.2",
+    "react-native-modalbox": "^2.0.0",
+    "react-native-swipe-list-view": "^2.1.2",
     "react-native-web": "~0.11.7"
   },
   "devDependencies": {

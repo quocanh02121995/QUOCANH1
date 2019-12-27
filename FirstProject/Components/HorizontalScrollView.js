@@ -1,11 +1,14 @@
 import React, { Conponent } from "react";
 import {
   AppRegistry,
-  ScrollView,
+  Image,
+  StyleSheet,
+  FlatList,
+  SectionList,
   View,
   Text,
   TextInput,
-  Dimension
+  Dimensions
 } from "react-native";
 
 export default class HorizontalScrollView extends Component {

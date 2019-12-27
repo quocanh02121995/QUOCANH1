@@ -1,28 +1,27 @@
 import React, { Component } from "react";
-import { AppRegistry } from "./index";
 import TextBlink from "./Components/TextBlink";
 import HelloWorld from "./Components/HelloWorld";
 import Login from "./Screens/Login";
-
+import AppRegistry from "./index";
 import {
-  Alert,
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
   Image,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  ScrollView,
-  Dimensions,
+  StyleSheet,
   FlatList,
-  SafeAreaView
+  SectionList,
+  ScrollView,
+  View,
+  TouchableHighlight,
+  Text,
+  TextInput,
+  Dimensions,
+  Modal,
+  Platform
 } from "react-native";
+import AddModal from "./Components/AddModal";
 
-const flatListData = [
+//import {getMovieInfoFromServer} from './Networking/Server';
+
+var flatListData = [
   {
     name: "Zenvo ST1",
     image: "https://www.boxymo.ie/news/img/zenvo.jpg",
@@ -70,37 +69,107 @@ const flatListData = [
   },
   {
     name: "Koenigsegg CCXR Trevita",
-    image: "https://www.boxymo.ie/news/img/lamborghini.jpg",
+    image: "https://www.boxymo.ie/news/img/koenigsegg-trevita.jpg",
     price: "$4.8M"
   }
 ];
 
-function Item({ name, price, image }) {
+let screenWidth = Dimensions.get("window").width;
+
+function onPressAdd() {
+  setModalVisible(true);
+}
+
+function FlatListItem({ name, price, image }) {
   return (
-    <View style={{flex:1,flexDirection: 'row'}}>
+    <View
+      style={{
+        flex: 1,
+        flexDirection: "row",
+        backgroundColor: "bisque",
+        borderBottomWidth: 0.75,
+        borderBottomColor: "white"
+      }}
+    >
       <Image
-        style={styles.itemImage}
-        source={{ uri: flatListData.image }}
+        style={{ width: 100, height: 100, margin: 5, alignItems: "center" }}
+        source={{ uri: image }}
       />
-      <View style={styles.item}>
-        <Text style={styles.itemDetail}>{name}</Text>
-        <Text style={styles.itemDetail}>{price}</Text>
+      <View styles={{ flex: 1 }}>
+        <Text style={{ flexDirection: "column", fontSize: 16, margin: 5 }}>
+          {name}
+          {"\n"}
+          {price}
+        </Text>
       </View>
     </View>
   );
 }
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={flatListData}
-        renderItem={({ item }) => (
-          <Item image={item.image} name={item.name} price={item.price} />
-        )}
-      />
-    </View>
-  );
+export default class flatList extends Component {
+  state = {
+    modalVisible: false
+  };
+
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
+
+  render() {
+    return (
+      <View style={{ flex: 1, marginTop: 24 }}>
+        <View
+          style={{
+            backgroundColor: "#e2593e",
+            height: 64,
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            alignItems: "center"
+          }}
+        >
+          <TouchableHighlight
+            style={{ marginRight: 10 }}
+            underlayColor="black"
+            onPress={() => {
+              this.setModalVisible(true);
+            }}
+          >
+            <Image
+              style={{ height: 35, width: 35 }}
+              source={require("./Icons/icons8-add-32.png")}
+            />
+          </TouchableHighlight>
+        </View>
+        <FlatList
+          data={flatListData}
+          renderItem={({ item }) => (
+            <FlatListItem
+              image={item.image}
+              name={item.name}
+              price={item.price}
+            />
+          )}
+        />
+        <Modal
+          style={{
+            justifyContent: "center",
+            borderRadius: 30,
+            shadowRadius: 10
+          }}
+          position="center"
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            this.setModalVisible(false);
+            alert("Modal closed");
+          }}
+        >
+          <Text style={{ textAlign: "center", fontSize: 24 }}>
+            Insert car information
+          </Text>
+        </Modal>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -139,15 +208,16 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: "aliceblue",
     padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    flexDirection: 'column'
+    width: screenWidth
   },
   itemDetail: {
+    flexDirection: "column",
     fontSize: 16,
-
+    textAlign: "center",
+    margin: 5
   },
   itemImage: {
+    backgroundColor: "black",
     width: 100,
     height: 100,
     margin: 5,

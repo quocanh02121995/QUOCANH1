@@ -1,16 +1,18 @@
-import React, { Component } from "react";
+import React,{Conponent{ from 'react',
 import {
   AppRegistry,
   Image,
   StyleSheet,
   FlatList,
+  SectionList,
+  ScrollView,
   View,
   Text,
   TextInput,
   Dimensions
 } from "react-native";
 
-var flatListData = [
+const flatListData = [
   {
     name: "Zenvo ST1",
     image: "https://www.boxymo.ie/news/img/zenvo.jpg",
@@ -65,27 +67,28 @@ var flatListData = [
 
 let screenWidth = Dimensions.get("window").width;
 
-function onPressAdd() {
-  alert("Add an item");
-}
-
-class Item({ name, price, image }) {
+function Item({ name, price, image }) {
   return (
     <View
       style={{
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "column",
         backgroundColor: "bisque",
         borderBottomWidth: 0.75,
-        borderBottomColor: "white"
+        borderBottomColor: "white",
+        borderWidth: 1,
+        borderColor:"white"
+
       }}
     >
       <Image
-        style={{ width: 100, height: 100, margin: 5, alignItems: "center" }}
+        style={{ width: 150, height: 100, margin: 5, alignItems: "center"}}
         source={{ uri: image }}
+        resizeMode="stretch"
+
       />
       <View styles={{ flex: 1 }}>
-        <Text style={{ flexDirection: "column", fontSize: 16, margin: 5 }}>
+        <Text style={{ flexDirection: "row", fontSize: 16, margin: 5,}}>
           {name}
           {"\n"}
           {price}
@@ -95,40 +98,19 @@ class Item({ name, price, image }) {
   );
 }
 
-export default class FlatList extends Component {
+export default class horizontalFlatList extends Component {
   render() {
     return (
-      <View style={{ flex: 1,marginTop: 24}}>
-        <View
-          style={{
-            backgroundColor: '#e2593e',
-            height: 64,
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            alignItems: "center"
-          }}
-        >
-          <TouchableHighlight
-            style={{ marginRight: 10 }}
-            underlayColor="black"
-            onPress={onPressAdd}
-          >
-            <Image
-              style={{ height: 35, width: 35 }}
-              source={require("./Icons/icons8-add-32.png")}
-            />
-          </TouchableHighlight>
-        </View>
+      <View style={{flex:1,flexDirection: 'column',}}>
+      <View style={{ height:180, backgroundColor: "#fff", alignItems: "center"}}>
         <FlatList
           data={flatListData}
-          renderItem={({ item}) => (
-            <FlastListItem
-              image={item.image}
-              name={item.name}
-              price={item.price}
-            />
+          horizontal={true}
+          renderItem={({ item }) => (
+            <Item image={item.image} name={item.name} price={item.price} />
           )}
         />
+      </View>
       </View>
     );
   }
